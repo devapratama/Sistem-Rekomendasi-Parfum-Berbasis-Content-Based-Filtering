@@ -42,7 +42,7 @@ Dataset yang digunakan berisi informasi mengenai 2.191 parfum dari berbagai mere
 - **Description** dan **Notes** menjadi fokus utama untuk proses pemodelan.
 
 **Sumber Data**:
-Dataset dapat diakses melalui tautan berikut: https://www.fictitiouslink.com](https://www.kaggle.com/datasets/nandini1999/perfume-recommendation-dataset/data
+Dataset dapat diakses melalui tautan berikut: https://www.kaggle.com/datasets/nandini1999/perfume-recommendation-dataset/data
 
 ---
 
