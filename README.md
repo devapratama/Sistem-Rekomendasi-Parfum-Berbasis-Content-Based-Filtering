@@ -49,13 +49,17 @@ Dataset dapat diakses melalui tautan berikut: https://www.kaggle.com/datasets/na
 ## **Data Preparation**
 
 ### **Tahapan Data Preparation**
-1. **Preprocessing Teks**: Tokenisasi dan penghapusan stop words.
-2. **Representasi Data**: Menggunakan **TF-IDF Vectorizer** untuk mengubah data teks menjadi representasi numerik.
-3. **Penggabungan Fitur**: Menggabungkan kolom **Description** dan **Notes** untuk menghasilkan satu fitur teks yang lebih informatif.
+1. **Menangani Nilai yang Hilang (Missing Values)**
+   - Memeriksa dan mengganti nilai hilang pada kolom Description dan Notes dengan string kosong.
+2. **Feature Engineering (Pengolahan Teks)**
+   - Menghapus stopwords, melakukan tokenization, dan menerapkan TF-IDF pada kolom Description dan Notes.
+3. **Penggabungan Fitur**
+   - Menggabungkan vektor hasil TF-IDF dari Description dan Notes menjadi satu matriks fitur.
 
 ### **Alasan Tahapan**
-- Preprocessing diperlukan untuk mengurangi kompleksitas data teks dan menghilangkan informasi yang tidak relevan.
-- Representasi numerik menggunakan TF-IDF memastikan bahwa frekuensi dan pentingnya setiap kata diperhatikan.
+- **Menangani Nilai yang Hilang**: Menghindari kesalahan saat pemodelan dengan memastikan data lengkap.
+- **Feature Engineering**: Mengubah teks menjadi representasi numerik yang dapat diproses oleh model.
+- **Penggabungan Fitur**: Membuat representasi fitur yang kaya untuk meningkatkan akurasi dalam menghitung kesamaan antar parfum.
 
 ---
 
@@ -63,9 +67,13 @@ Dataset dapat diakses melalui tautan berikut: https://www.kaggle.com/datasets/na
 
 ### **Pendekatan**
 Model sistem rekomendasi yang digunakan adalah **Content-Based Filtering** dengan langkah-langkah sebagai berikut:
-1. **TF-IDF Vectorizer** digunakan untuk mengekstrak fitur numerik dari teks.
-2. **Cosine Similarity** digunakan untuk menghitung kemiripan antara parfum.
-3. Sistem memberikan **top-N recommendation** berdasarkan parfum yang memiliki kemiripan tertinggi.
+1. **Penghitungan Kesamaan Cosine (Cosine Similarity)**:
+   - Mengukur kesamaan antara parfum berdasarkan deskripsi dan catatan wewangian mereka menggunakan Cosine Similarity.
+   - Rumus: 
+     $$\text{Cosine Similarity} = \cos(\theta) = \frac{A \cdot B}{\|A\| \|B\|}$$
+   - Di mana A dot B adalah dot product dari vektor A dan B, ||A|| dan ||B|| adalah panjang dari vektor A dan B, dan theta adalah sudut antara dua vektor.
+2. **Pembangunan Model Rekomendasi**:
+   - Menggunakan matriks cosine similarity untuk memilih parfum dengan kesamaan tertinggi dan menampilkan 5 parfum teratas yang paling mirip dengan parfum yang dipilih pengguna.
 
 ### **Top-N Recommendation**
 Berikut adalah contoh hasil rekomendasi top-5:
@@ -76,12 +84,12 @@ Berikut adalah contoh hasil rekomendasi top-5:
 
 ### **Kelebihan dan Kekurangan**
 **Kelebihan**:
-- Tidak membutuhkan data historis interaksi pengguna.
-- Efektif untuk memberikan rekomendasi personal berdasarkan karakteristik produk.
+- Rekomendasi yang relevan berdasarkan deskripsi dan catatan wewangian parfum.
+- Tidak memerlukan data pengguna atau interaksi sebelumnya, cocok untuk pengguna baru (cold-start problem).
 
 **Kekurangan**:
-- Tidak dapat menangani cold start untuk parfum baru tanpa deskripsi lengkap.
-- Rentan terhadap data teks yang tidak terstruktur dengan baik.
+- Hanya mengandalkan informasi dari deskripsi dan catatan wewangian, tidak mempertimbangkan preferensi atau perilaku pengguna sebelumnya.
+- Rekomendasi mungkin tidak cukup beragam jika deskripsi dan catatan wewangian parfum sangat mirip satu sama lain.
 
 ---
 
