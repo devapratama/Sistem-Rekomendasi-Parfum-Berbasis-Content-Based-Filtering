@@ -50,16 +50,26 @@ Dataset dapat diakses melalui tautan berikut: https://www.kaggle.com/datasets/na
 
 ### **Tahapan Data Preparation**
 1. **Menangani Nilai yang Hilang (Missing Values)**
-   - Memeriksa dan mengganti nilai hilang pada kolom Description dan Notes dengan string kosong.
+   - Memeriksa kolom Description dan Notes untuk nilai kosong atau NaN, kemudian menggantinya dengan string kosong (`""`), agar data tidak memiliki nilai kosong yang dapat menyebabkan masalah saat proses selanjutnya.
+
 2. **Feature Engineering (Pengolahan Teks)**
-   - Menghapus stopwords, melakukan tokenization, dan menerapkan TF-IDF pada kolom Description dan Notes.
+   - **Stopwords Removal & Tokenization**:
+     - Menghapus kata-kata umum yang tidak memberikan informasi penting (misalnya, "the", "and", "is") untuk menyaring kata-kata yang tidak signifikan.
+     - Memecah teks menjadi kata atau token untuk memudahkan proses vektorisasi.
+   - **TF-IDF (Term Frequency-Inverse Document Frequency)**:
+     - Mengubah teks di kolom Description dan Notes menjadi vektor numerik menggunakan teknik TF-IDF.
+     - `stop_words='english'` digunakan untuk menghapus kata-kata umum yang tidak memberikan informasi penting.
+     - `max_features=500` membatasi jumlah kata yang dipertimbangkan dalam proses vektorisasi untuk menghindari overfitting dan meningkatkan efisiensi.
+     - Hasilnya adalah 500 kolom vektor dari Description dan 500 kolom vektor dari Notes.
+
 3. **Penggabungan Fitur**
-   - Menggabungkan vektor hasil TF-IDF dari Description dan Notes menjadi satu matriks fitur.
+   - Menggabungkan vektor hasil dari TF-IDF untuk Description dan Notes menjadi satu matriks fitur menggunakan `hstack()`, menghasilkan total 1000 kolom fitur gabungan.
+   - Menambahkan kolom Perfume_ID untuk mempermudah referensi setiap parfum dalam proses rekomendasi, serta menyimpan fitur yang telah digabungkan ke dalam DataFrame agar lebih mudah diakses dan dimanipulasi.
 
 ### **Alasan Tahapan**
-- **Menangani Nilai yang Hilang**: Menghindari kesalahan saat pemodelan dengan memastikan data lengkap.
-- **Feature Engineering**: Mengubah teks menjadi representasi numerik yang dapat diproses oleh model.
-- **Penggabungan Fitur**: Membuat representasi fitur yang kaya untuk meningkatkan akurasi dalam menghitung kesamaan antar parfum.
+- **Menangani Nilai yang Hilang**: Memastikan data lengkap untuk menghindari kesalahan dalam pemodelan, sehingga setiap parfum memiliki deskripsi dan catatan wewangian yang lengkap.
+- **Feature Engineering**: Mengubah teks menjadi representasi numerik yang signifikan bagi model, meningkatkan kemampuan model untuk memahami dan mengukur kesamaan antar deskripsi dan catatan wewangian.
+- **Penggabungan Fitur**: Membuat representasi fitur yang kaya dan lengkap, yang penting untuk meningkatkan akurasi dalam menghitung kesamaan antar parfum, sehingga rekomendasi yang dihasilkan lebih relevan dan tepat sasaran.
 
 ---
 
