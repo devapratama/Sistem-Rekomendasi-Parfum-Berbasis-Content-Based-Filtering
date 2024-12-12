@@ -80,7 +80,7 @@ Model sistem rekomendasi yang digunakan adalah **Content-Based Filtering** denga
 1. **Penghitungan Kesamaan Cosine (Cosine Similarity)**:
    - Mengukur kesamaan antara parfum berdasarkan deskripsi dan catatan wewangian mereka menggunakan Cosine Similarity.
    - Rumus: 
-     $$\text{Cosine Similarity} = \cos(\theta) = \frac{A \cdot B}{\|A\| \|B\|}$$
+     $$\text{Cosine Similarity} = \cos(\theta) = \frac{A \cdot B}{\||A|\| \||B|\|}$$
    - Di mana A dot B adalah dot product dari vektor A dan B, ||A|| dan ||B|| adalah panjang dari vektor A dan B, dan theta adalah sudut antara dua vektor.
 2. **Pembangunan Model Rekomendasi**:
    - Menggunakan matriks cosine similarity untuk memilih parfum dengan kesamaan tertinggi dan menampilkan 5 parfum teratas yang paling mirip dengan parfum yang dipilih pengguna.
@@ -114,7 +114,7 @@ Precision at K dihitung dengan rumus:
 **Precision@K** = (Jumlah rekomendasi relevan di Top K) / K
 
 Dimana:
-- "Jumlah rekomendasi relevan di Top K" adalah jumlah rekomendasi yang relevan dari total K rekomendasi yang diberikan.
+- "Jumlah rekomendasi relevan di Top K" adalah jumlah rekomendasi yang relevan dari total K rekomendasi yang diberikan. Rekomendasi dianggap relevan jika skor kesamaannya lebih tinggi dari threshold 0.3
 - K adalah jumlah rekomendasi yang ditampilkan (misalnya 5, 10, atau 20).
 
 **Hasil Evaluasi**:
